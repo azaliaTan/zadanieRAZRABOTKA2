@@ -12,6 +12,8 @@ function form($user) {
         $errors['name'] = "Заполните поле имени";
     } elseif (strlen($user['name']) < 2) {
         $errors['name'] = "Не менее 2 символов в имени";
+    }elseif (preg_match('/[a-zA-Z]+$/u', $user['name'])) {
+        $errors['name'] = "Имя должно содержать только русские буквы";
     }
 
     if (empty($user['email'])) {
@@ -26,6 +28,8 @@ function form($user) {
         $errors['phone'] = "Заполните поле номера телефона";
     } elseif (strlen($user['phone']) != 10) {
         $errors['phone'] = "Номер должен содержать 10 символов";
+    }elseif (!preg_match('/^\d+$/', $user['phone'])) {
+        $errors['phone'] = 'Номер телефона должен содержать только цифры';
     }
 
     return $errors;
